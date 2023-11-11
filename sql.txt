@@ -1,0 +1,17 @@
+# Вывод списка логинов курьеров с количеством их заказов в статусе «В доставке» (поле inDelivery = true)
+select cor.login as "Courier",
+       count (ord."inDelivery") as "Order's quantity"
+from "Couriers" as cor
+inner join "Orders" as ord on cor.id=ord."courierId"
+where ord."inDelivery" = true
+group by cor.login;
+
+# Вывод всех трекеров заказа и их статусов
+select track,
+       case
+           when finished = true then '2'
+           when cancelled = true then '-1'
+           when "inDelivery" = true then '1'
+           else '0'
+       end as status
+from "Orders";
